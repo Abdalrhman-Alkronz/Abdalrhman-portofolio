@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Abdalrhman Mohammed — Agentic AI Developer building AI agents, RAG systems and workflow automations." />
+  <meta name="theme-color" content="#090D16" />
+  <title>Abdalrhman Mohammed — Agentic AI Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="neural-canvas" aria-hidden="true"></canvas>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <nav class="navbar container">
+      <a class="brand" href="#top" aria-label="Abdalrhman Mohammed home">
+        <span class="brand-mark">AM</span>
+        <span>Abdalrham Mohammed</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <a class="nav-cta" data-link="whatsapp" target="_blank" rel="noopener">Get in Touch <span>↗</span></a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero container" id="about">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="status-dot"></span> Available for AI & Automation projects</div>
+        <h1>I build <span>intelligent systems</span> that work for you.</h1>
+        <p class="hero-text">
+          I build AI-powered systems, autonomous agents, and workflow automations that turn repetitive business processes into smarter, self-running operations.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#projects">View Projects <span>↓</span></a>
+          <a class="button button-secondary" data-link="whatsapp" target="_blank" rel="noopener">Let's Chat <span>↗</span></a>
+        </div>
+
+        <div class="tech-highlights" id="heroTech"></div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="avatar-orbit">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="avatar-card">
+            <div class="avatar-placeholder" id="avatar">AM</div>
+            <div class="avatar-glow"></div>
+          </div>
+          <span class="orbit-dot dot-a"></span>
+          <span class="orbit-dot dot-b"></span>
+          <span class="orbit-dot dot-c"></span>
+        </div>
+        <div class="floating-chip chip-one">AI Agents</div>
+        <div class="floating-chip chip-two">n8n</div>
+        <div class="floating-chip chip-three">RAG</div>
+      </div>
+    </section>
+
+    <section class="section container" id="skills">
+      <div class="section-heading reveal">
+        <span class="section-kicker">01 / TOOLKIT</span>
+        <h2>Built around <span>useful technology.</span></h2>
+        <p>The tools I use to connect AI with real workflows, data, and business processes.</p>
+      </div>
+      <div class="skills-grid" id="skillsGrid"></div>
+    </section>
+
+    <section class="section container projects-section" id="projects">
+      <div class="section-heading reveal">
+        <span class="section-kicker">02 / SELECTED WORK</span>
+        <h2>Projects that turn ideas into <span>working systems.</span></h2>
+        <p>Real-world automation concepts, AI agents, and intelligent workflows.</p>
+      </div>
+      <div class="projects-list" id="projectsList"></div>
+    </section>
+
+    <section class="contact-section container" id="contact">
+      <div class="contact-card reveal">
+        <div>
+          <span class="section-kicker">03 / LET'S BUILD</span>
+          <h2>Ready to automate your workflows or build custom AI agents?</h2>
+          <p>Have a repetitive process, an AI idea, or a workflow that needs a smarter approach? Let's talk.</p>
+        </div>
+        <div class="contact-actions">
+          <a class="button button-primary" data-link="whatsapp" target="_blank" rel="noopener">Chat on WhatsApp <span>↗</span></a>
+          <a class="button button-secondary" data-link="email">Send an Email <span>↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <div class="footer-left">
+      <span class="brand-mark small">AM</span>
+      <span>© <span id="year"></span> Abdalrhman Mohammed</span>
+    </div>
+    <div class="socials" id="socials"></div>
+  </footer>
+
+  <a class="whatsapp-fab" data-link="whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">◔</a>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
