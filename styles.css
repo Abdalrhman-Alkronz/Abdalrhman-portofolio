@@ -177,3 +177,62 @@ h1 span, h2 span { color: var(--accent); }
   .project:nth-child(even) .project-media { order: 2; }
   .contact-card { flex-direction:column; align-items:flex-start; }
 }
+/* ---- Brand avatar photo (navbar) ---- */
+.brand-mark { overflow: hidden; }
+.brand-mark img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+
+/* ---- "View Full Scope" link under each project ---- */
+.scope-trigger { display:inline-flex; align-items:center; gap:8px; margin-top:18px; color:#8e9c99; font-size:12px; font-weight:700; letter-spacing:.03em; }
+.scope-trigger span { transition:.25s; }
+.scope-trigger:hover { color:var(--accent); }
+.scope-trigger:hover span { transform:translate(2px,-2px); }
+
+/* ==========================================================
+   Scope page (scope.html) — dedicated project detail view
+   ========================================================== */
+.scope-page { padding-top: 150px; padding-bottom: 100px; }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:#8e9c99; font-size:13px; font-weight:600; margin-bottom:34px; transition:.2s; }
+.back-link:hover { color:var(--accent); }
+
+.scope-hero { max-width: 780px; margin-bottom: 48px; }
+.scope-hero h1 { font-size: clamp(30px, 4vw, 50px); letter-spacing:-.03em; line-height:1.08; margin: 14px 0 12px; }
+.scope-tagline { color:#d5dfdc; font-weight:600; font-size:16px; margin:0; }
+
+.scope-layout { display:grid; grid-template-columns: 1.55fr .95fr; gap: 44px; align-items: start; }
+
+.scope-main .project-media { margin-bottom: 36px; }
+.scope-block { margin-bottom: 38px; }
+.scope-block h4 { font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin:0 0 16px; }
+.scope-block p { color: var(--muted); font-size:14.5px; line-height:1.8; margin:0; }
+
+.ideal-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.ideal-card { display:flex; align-items:flex-start; gap:10px; padding:14px 16px; border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.02); color:#cdd8d5; font-size:13px; line-height:1.55; }
+.ideal-dot { flex-shrink:0; width:6px; height:6px; margin-top:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent); }
+
+.approach-list { display:flex; flex-direction:column; gap:0; }
+.approach-step { display:flex; gap:18px; padding:16px 0; border-bottom:1px solid var(--line); }
+.approach-step:last-child { border-bottom:0; }
+.approach-index { flex-shrink:0; color:var(--accent); font-weight:800; font-size:13px; letter-spacing:.04em; }
+.approach-step p { margin:0; color:var(--muted); font-size:14px; line-height:1.7; }
+
+.scope-summary { position: sticky; top: 110px; border:1px solid var(--line); border-radius: var(--radius); padding: 26px; background:linear-gradient(145deg, rgba(16,24,35,.7), rgba(10,15,23,.5)); backdrop-filter: blur(16px); box-shadow: var(--shadow); }
+.scope-summary-kicker { display:block; color:var(--accent); font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin-bottom:18px; }
+.summary-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--line); font-size:13px; color:#aebbb8; }
+.summary-row strong { color:var(--text); font-size:13px; }
+.scope-summary h4 { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#8e9c99; margin:22px 0 12px; }
+.deliverables-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px; }
+.deliverables-list li { display:flex; align-items:flex-start; gap:10px; font-size:13px; color:#cdd8d5; line-height:1.55; }
+.deliverables-list .check { flex-shrink:0; width:18px; height:18px; display:grid; place-items:center; border-radius:6px; background:rgba(88,245,194,.12); color:var(--accent); font-size:10px; font-weight:800; margin-top:1px; }
+.scope-actions { display:flex; flex-direction:column; gap:10px; margin-top:24px; }
+.scope-actions .button { justify-content:center; width:100%; }
+.scope-next { margin-top:24px; padding-top:20px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:6px; }
+.scope-next span { font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:#8e9c99; }
+.scope-next a { display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:13px; font-weight:700; color:var(--text); }
+.scope-next a:hover { color: var(--accent); }
+
+@media (max-width: 880px) {
+  .scope-page { padding-top: 120px; }
+  .scope-layout { grid-template-columns: 1fr; }
+  .scope-summary { position: static; }
+  .ideal-grid { grid-template-columns: 1fr; }
+}
