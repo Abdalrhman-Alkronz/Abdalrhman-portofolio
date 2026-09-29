@@ -1,10 +1,9 @@
-const $ = (selector, parent = document) => parent.querySelector(selector);
-const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
+const $ = (selector, parent = document) => parent.querySelector(selector); const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
 
 function setLinks() {
   const p = portfolioData.personal;
-  $$('[data-link="whatsapp"]').forEach(el => el.href = p.whatsapp);
-  $$('[data-link="email"]').forEach(el => el.href = `mailto:${p.email}`);
+  $$('[data-link="whatsapp"]').forEach(el => el.href = p.whatsapp);   $$
+('[data-link="email"]').forEach(el => el.href = `mailto:${p.email}`);
 
   const socials = [
     ["LinkedIn", p.linkedin, "in"],
@@ -41,13 +40,13 @@ function renderSkills() {
 }
 
 function flowPlaceholder(project) {
-  const nodes = project.tech.slice(0, 4).map(t =>
-    `<div class="flow-node"><b></b><span>${t}</span></div>`
+  const nodes = project.tech.slice(0, 4).map((t, i) =>
+    `<div class="flow-node"><b>${String(i + 1).padStart(2, "0")}</b><span>${t}</span></div>`
   ).join('<span class="flow-link"></span>');
   return `
     <div class="flow">
       <div class="flow-chain">${nodes}</div>
-      <p class="flow-note"><span class="pulse"></span> Demo video coming soon</p>
+      <p class="flow-note"><span class="pulse"></span> Demo preview loading</p>
     </div>`;
 }
 
@@ -72,15 +71,11 @@ function projectActions(project) {
   if (project.liveDemo) actions.push(`<a href="${project.liveDemo}" target="_blank" rel="noopener">Live Demo ↗</a>`);
   if (project.github) actions.push(`<a href="${project.github}" target="_blank" rel="noopener">GitHub ↗</a>`);
   if (actions.length) return `<div class="project-actions">${actions.join("")}</div>`;
-  return `<span class="project-status"><span class="pulse"></span> Case study in progress</span>`;
-}
-
-function scopeTrigger(index) {
-  return `<button type="button" class="scope-trigger" data-scope-index="${index}">View Full Scope <span>↗</span></button>`;
+  return `<span class="project-status"><span class="pulse"></span> Active Case Study</span>`;
 }
 
 function renderProjects() {
-  $("#projectsList").innerHTML = portfolioData.projects.map((project, i) => `
+  $("#projectsList").innerHTML = portfolioData.projects.map(project => `
     <article class="project reveal">
       <div class="project-info">
         <h3>${project.title}</h3>
@@ -90,63 +85,10 @@ function renderProjects() {
           ${project.tech.map(t => `<span>${t}</span>`).join("")}
         </div>
         ${projectActions(project)}
-        ${scopeTrigger(i)}
       </div>
       ${projectMedia(project)}
     </article>
   `).join("");
-}
-
-function ensureScopeModal() {
-  if ($("#scopeModal")) return $("#scopeModal");
-  const modal = document.createElement("div");
-  modal.id = "scopeModal";
-  modal.className = "scope-modal";
-  modal.innerHTML = `
-    <div class="scope-backdrop" data-close></div>
-    <div class="scope-panel" role="dialog" aria-modal="true" aria-labelledby="scopeTitle">
-      <button type="button" class="scope-close" data-close aria-label="Close">✕</button>
-      <div class="scope-content"></div>
-    </div>`;
-  document.body.appendChild(modal);
-  modal.addEventListener("click", (e) => {
-    if (e.target.closest("[data-close]")) closeScope();
-  });
-  return modal;
-}
-
-function openScope(project) {
-  const modal = ensureScopeModal();
-  const s = project.scope || {};
-  $(".scope-content", modal).innerHTML = `
-    <span class="scope-kicker">Project Scope</span>
-    <h3 id="scopeTitle">${project.title}</h3>
-    ${s.overview ? `<p class="scope-overview">${s.overview}</p>` : ""}
-    ${s.problem ? `<div class="scope-block"><h4>The Problem</h4><p>${s.problem}</p></div>` : ""}
-    ${s.approach && s.approach.length ? `<div class="scope-block"><h4>Approach</h4><ol>${s.approach.map(a => `<li>${a}</li>`).join("")}</ol></div>` : ""}
-    ${s.outcome ? `<div class="scope-block"><h4>Outcome</h4><p>${s.outcome}</p></div>` : ""}
-    <div class="scope-block"><h4>Tech Stack</h4><div class="scope-tech">${project.tech.map(t => `<span>${t}</span>`).join("")}</div></div>
-    ${s.timeline ? `<div class="scope-timeline"><span class="pulse"></span> ${s.timeline}</div>` : ""}
-  `;
-  document.body.classList.add("scope-open");
-  requestAnimationFrame(() => modal.classList.add("open"));
-}
-
-function closeScope() {
-  const modal = $("#scopeModal");
-  if (!modal) return;
-  modal.classList.remove("open");
-  document.body.classList.remove("scope-open");
-}
-
-function setupScopeTriggers() {
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".scope-trigger");
-    if (btn) openScope(portfolioData.projects[Number(btn.dataset.scopeIndex)]);
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeScope();
-  });
 }
 
 function setupMobileMenu() {
@@ -156,29 +98,14 @@ function setupMobileMenu() {
     const open = links.classList.toggle("open");
     toggle.setAttribute("aria-expanded", String(open));
   });
-  $$("#navLinks a").forEach(a => a.addEventListener("click", () => {
-    links.classList.remove("open");
-    toggle.setAttribute("aria-expanded", "false");
-  }));
-}
-
-function setupReveal() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  $$(".reveal").forEach(el => observer.observe(el));
+  $$("#navLinks a").forEach(a => a.addEventListener("click", () => {     links.classList.remove("open");     toggle.setAttribute("aria-expanded", "false");   })); }  function setupReveal() {   const observer = new IntersectionObserver((entries) => {     entries.forEach(entry => {       if (entry.isIntersecting) {         entry.target.classList.add("visible");         observer.unobserve(entry.target);       }     });   }, { threshold: 0.12 });    $$
+(".reveal").forEach(el => observer.observe(el));
 }
 
 function setupCanvas() {
   const canvas = $("#neural-canvas");
   const ctx = canvas.getContext("2d");
-  let width, height, particles, raf;
+  let width, height, particles;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function resize() {
@@ -191,7 +118,7 @@ function setupCanvas() {
     canvas.style.height = height + "px";
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    const count = Math.min(75, Math.max(28, Math.floor((width * height) / 19000)));
+    const count = Math.min(65, Math.max(25, Math.floor((width * height) / 22000)));
     particles = Array.from({ length: count }, (_, i) => ({
       x: Math.random() * width,
       y: Math.random() * height,
@@ -203,7 +130,7 @@ function setupCanvas() {
 
   function draw() {
     ctx.clearRect(0, 0, width, height);
-    const maxDist = Math.min(145, width * .16);
+    const maxDist = Math.min(140, width * .15);
 
     for (const p of particles) {
       if (!reducedMotion) {
@@ -215,7 +142,7 @@ function setupCanvas() {
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(93, 255, 204, .35)";
+      ctx.fillStyle = "rgba(88, 245, 194, .35)";
       ctx.fill();
     }
 
@@ -228,14 +155,14 @@ function setupCanvas() {
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(63, 214, 184, ${0.09 * (1 - dist / maxDist)})`;
+          ctx.strokeStyle = `rgba(88, 245, 194, ${0.08 * (1 - dist / maxDist)})`;
           ctx.lineWidth = .7;
           ctx.stroke();
         }
       }
     }
 
-    if (!reducedMotion) raf = requestAnimationFrame(draw);
+    if (!reducedMotion) requestAnimationFrame(draw);
   }
 
   window.addEventListener("resize", resize, { passive: true });
@@ -247,7 +174,6 @@ setLinks();
 renderHighlights();
 renderSkills();
 renderProjects();
-setupScopeTriggers();
 setupMobileMenu();
 setupReveal();
 setupCanvas();
