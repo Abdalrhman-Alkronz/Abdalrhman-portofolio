@@ -7,7 +7,7 @@ const portfolioData = {
     linkedin: "https://linkedin.com/in/your-profile",
     github: "https://github.com/your-username",
     upwork: "https://upwork.com/freelancers/~your-id",
-    avatar: "assets/avatar.jpeg"
+    avatar: "avatar.jpeg"
   },
   highlights: [
     "Agentic AI", "AI Agents", "Workflow Automation",
