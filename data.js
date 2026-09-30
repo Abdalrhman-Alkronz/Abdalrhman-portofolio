@@ -38,7 +38,7 @@ const portfolioData = {
         description: "An AI-powered recruitment automation system that receives CVs, validates and extracts candidate data, checks for duplicates, scores applicants against job requirements, and organizes the results for faster HR screening.",
         tech: ["n8n", "Gemini", "AI Processing", "PDF Extraction", "Google Sheets"],
         video: "",
-        image: "cv-screening.png",
+        image: "",
         liveDemo: "",
         github: "",
       },
