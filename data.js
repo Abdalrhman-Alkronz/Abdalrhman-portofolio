@@ -38,7 +38,7 @@ const portfolioData = {
       description: "An automated recruitment workflow that ingests CVs, parses structured candidate profiles, compares skills against strict job descriptions, and organizes qualified applicants directly into Google Sheets for rapid HR screening.",
       tech: ["n8n", "AI Processing", "Google Sheets", "PDF Extraction"],
       video: "", // ضيف مسار فيديو العرض هنا مثلاً "videos/hr-screening.mp4"
-      image: "",
+      image: "cv-screening.png"
       liveDemo: "",
       github: ""
     },
