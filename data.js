@@ -31,15 +31,17 @@ const portfolioData = {
   ],
   projects: [
     {
-      id: "hr-screening",
-      title: "AI HR Candidate Screening System",
-      tagline: "Autonomous resume parsing and applicant scoring pipeline",
-      description: "An automated recruitment workflow that ingests CVs, parses structured candidate profiles, compares skills against strict job descriptions, and organizes qualified applicants directly into Google Sheets for rapid HR screening.",
-      tech: ["n8n", "AI Processing", "Google Sheets", "PDF Extraction"],
-      video: "",
-      image: "",
-      liveDemo: "",
-      github: "",
+     {
+        id: "hr-screening",
+        title: "AI HR Candidate Screening System",
+        tagline: "Automated CV screening and candidate matching for HR",
+        description: "An AI-powered recruitment automation system that receives CVs, validates and extracts candidate data, checks for duplicates, scores applicants against job requirements, and organizes the results for faster HR screening.",
+        tech: ["n8n", "Gemini", "AI Processing", "PDF Extraction", "Google Sheets"],
+        video: "",
+        image: "assets/cv-screening.png",
+        liveDemo: "",
+        github: "",
+      },
       scope: {
         idealFor: [
           "Recruiters buried under dozens of CVs per role",
