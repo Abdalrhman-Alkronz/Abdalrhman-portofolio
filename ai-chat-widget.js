@@ -50,13 +50,13 @@ class AbdalrhmanAiChat extends HTMLElement {
         }
 
         .chat-widget-container {
-          position: fixed;
-          bottom: 25px;
-          right: 25px;
-          z-index: 999999;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 999999;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
         }
 
         .chat-button {
