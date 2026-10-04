@@ -113,38 +113,23 @@
     <div class="socials" id="socials"></div>
   </footer>
 
-<a class="whatsapp-fab" data-link="whatsapp" aria-label="Chat on WhatsApp">
-  <svg viewBox="0 0 32 32" aria-hidden="true">
-    <path fill="currentColor" d="M19.11 17.44c-.28-.14-1.65-.81-1.91-.9-.26-.1-.45-.14-.64.14-.19.28-.73.9-.89 1.08-.16.19-.33.21-.61.07-.28-.14-1.17-.43-2.23-1.37-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.12-.12.28-.33.42-.5.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.64-1.54-.87-2.11-.23-.55-.46-.48-.64-.49h-.54c-.19 0-.49.07-.75.35-.26.28-.98.95-.98 2.32s1 2.69 1.15 2.87c.14.19 1.96 2.99 4.75 4.2.66.28 1.18.45 1.58.58.66.21 1.26.18 1.73.11.53-.08 1.65-.67 1.88-1.32.23-.65.23-1.21.16-1.32-.07-.12-.26-.19-.54-.33z"/>
-    <path fill="currentColor" d="M16.02 3.2c-7.08 0-12.84 5.75-12.84 12.83 0 2.26.59 4.38 1.62 6.22L3.08 28.8l6.73-1.67a12.8 12.8 0 0 0 6.21 1.59h.01c7.08 0 12.83-5.76 12.83-12.84S23.1 3.2 16.02 3.2zm0 23.4h-.01a10.56 10.56 0 0 1-5.38-1.47l-.39-.23-4 .99 1.07-3.9-.25-.4a10.61 10.61 0 1 1 8.96 4.99z"/>
-  </svg>
-</a>
+  <a class="whatsapp-fab" data-link="whatsapp" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path fill="currentColor" d="M19.11 17.44c-.28-.14-1.65-.81-1.91-.9-.26-.1-.45-.14-.64.14-.19.28-.73.9-.89 1.08-.16.19-.33.21-.61.07-.28-.14-1.17-.43-2.23-1.37-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.12-.12.28-.33.42-.5.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.64-1.54-.87-2.11-.23-.55-.46-.48-.64-.49h-.54c-.19 0-.49.07-.75.35-.26.28-.98.95-.98 2.32s1 2.69 1.15 2.87c.14.19 1.96 2.99 4.75 4.2.66.28 1.18.45 1.58.58.66.21 1.26.18 1.73.11.53-.08 1.65-.67 1.88-1.32.23-.65.23-1.21.16-1.32-.07-.12-.26-.19-.54-.33z"/>
+      <path fill="currentColor" d="M16.02 3.2c-7.08 0-12.84 5.75-12.84 12.83 0 2.26.59 4.38 1.62 6.22L3.08 28.8l6.73-1.67a12.8 12.8 0 0 0 6.21 1.59h.01c7.08 0 12.83-5.76 12.83-12.84S23.1 3.2 16.02 3.2zm0 23.4h-.01a10.56 10.56 0 0 1-5.38-1.47l-.39-.23-4 .99 1.07-3.9-.25-.4a10.61 10.61 0 1 1 8.96 4.99z"/>
+    </svg>
+  </a>
+
+  <!-- السكريبتات الأساسية -->
   <script src="data.js"></script>
   <script src="common.js"></script>
   <script src="app.js"></script>
-  <!-- استدعاء ملف الشات بوت -->
-<script type="module" src="./ai-chat-widget.js"></script>
-
-<!-- تفعيل مكون الشات بوت في الصفحة -->
-<!-- مكون الشات بوت والسكريبت الخاص به -->
+  
+  <!-- الشات بوت -->
+  <script type="module" src="./ai-chat-widget.js"></script>
   <abdalrhman-ai-chat api="https://abdalrhman-portofolio.vercel.app/api/chat"></abdalrhman-ai-chat>
-  <script src="ai-chat-widget.js"></script>
-<script>
-  const canvas = document.getElementById('neural-canvas');
-  const ctx = canvas.getContext('2d');
 
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  // إنشاء نقاط متحركة بلون بيبي بلو واضح
-  <!-- 1. عنصر الكانفاس (تأكد إنه مش متكرر مرتين) -->
-  <canvas id="neural-canvas"></canvas>
-
-  <!-- 2. كود السكريبت الجديد باللون السماوي الفاتح -->
+  <!-- خلفية الـ Cyber Grid Flow السماوي الفاتح -->
   <script>
     const canvas = document.getElementById('neural-canvas');
     const ctx = canvas.getContext('2d');
@@ -161,11 +146,11 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       offset = (offset + 0.6) % 40;
 
-      // لون سماوي فاتح وهادي جداً
+      // لون سماوي فاتح واضح وهادئ
       ctx.strokeStyle = 'rgba(186, 230, 253, 0.45)'; 
       ctx.lineWidth = 1;
 
-      // الخطوط الطولية
+      // رسم الخطوط الطولية
       for (let x = 0; x < canvas.width; x += 60) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
@@ -173,7 +158,7 @@
         ctx.stroke();
       }
 
-      // الخطوط العرضية المتحركة
+      // رسم الخطوط العرضية المتحركة
       for (let y = offset; y < canvas.height; y += 40) {
         ctx.beginPath();
         ctx.moveTo(0, y);
@@ -185,8 +170,5 @@
     }
     animate();
   </script>
-
-
-  
 </body>
 </html>
