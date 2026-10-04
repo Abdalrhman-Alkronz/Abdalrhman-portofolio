@@ -141,50 +141,51 @@
   resize();
 
   // إنشاء نقاط متحركة بلون بيبي بلو واضح
-  const particles = Array.from({ length: 45 }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 1.2,
-    vy: (Math.random() - 0.5) * 1.2,
-    radius: Math.random() * 3 + 2
-  }));
+  <!-- 1. عنصر الكانفاس (تأكد إنه مش متكرر مرتين) -->
+  <canvas id="neural-canvas"></canvas>
 
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  <!-- 2. كود السكريبت الجديد باللون السماوي الفاتح -->
+  <script>
+    const canvas = document.getElementById('neural-canvas');
+    const ctx = canvas.getContext('2d');
 
-    particles.forEach((p, i) => {
-      p.x += p.vx;
-      p.y += p.vy;
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
 
-      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    let offset = 0;
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      offset = (offset + 0.6) % 40;
 
-      // رسم النقطة (بيبي بلو مشرق)
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-      ctx.fillStyle = '#38bdf8'; 
-      ctx.fill();
+      // لون سماوي فاتح وهادي جداً
+      ctx.strokeStyle = 'rgba(186, 230, 253, 0.45)'; 
+      ctx.lineWidth = 1;
 
-      // توصيل الخطوط بين النقاط القريبة (بيبي بلو واضح)
-      for (let j = i + 1; j < particles.length; j++) {
-        const p2 = particles[j];
-        const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-        if (dist < 140) {
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(p2.x, p2.y);
-          ctx.strokeStyle = `rgba(56, 189, 248, ${1 - dist / 140})`;
-          ctx.lineWidth = 1.2;
-          ctx.stroke();
-        }
+      // الخطوط الطولية
+      for (let x = 0; x < canvas.width; x += 60) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
       }
-    });
 
-    requestAnimationFrame(animate);
-  }
+      // الخطوط العرضية المتحركة
+      for (let y = offset; y < canvas.height; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
 
-  animate();
-</script>
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+
 
   
 </body>
