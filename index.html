@@ -10,6 +10,77 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- ستايل الـ tooltip بتاع الشات (ينفع تنقله لـ styles.css) -->
+  <style>
+    /*
+      عدّل القيمتين دول عشان الكلمة تقف جنب الدايرة بالظبط:
+      --chat-bubble-right  : بُعد دايرة الشات عن يمين الشاشة
+      --chat-bubble-bottom : بُعد دايرة الشات عن تحت
+      --chat-bubble-size   : قطر الدايرة
+    */
+    :root {
+      --chat-bubble-right: 24px;
+      --chat-bubble-bottom: 24px;
+      --chat-bubble-size: 60px;
+    }
+
+    .chat-widget-wrapper {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    .bot-tooltip {
+      position: fixed;
+      right: calc(var(--chat-bubble-right) + var(--chat-bubble-size) + 14px);
+      bottom: calc(var(--chat-bubble-bottom) + (var(--chat-bubble-size) / 2) - 18px);
+      padding: 8px 14px;
+      border-radius: 12px;
+      background: #0f1729;
+      color: #e8f1ff;
+      border: 1px solid rgba(125, 211, 252, 0.35);
+      font: 600 13px/1.2 "Inter", sans-serif;
+      white-space: nowrap;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      transform: translateX(8px);
+      animation: tooltipIn 0.5s ease 1.5s forwards;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    /* السهم اللي بيشاور على الدايرة */
+    .bot-tooltip::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -6px;
+      width: 10px;
+      height: 10px;
+      background: #0f1729;
+      border-top: 1px solid rgba(125, 211, 252, 0.35);
+      border-right: 1px solid rgba(125, 211, 252, 0.35);
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .bot-tooltip.hide {
+      opacity: 0 !important;
+      transform: translateX(8px) !important;
+      animation: none;
+    }
+
+    @keyframes tooltipIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @media (max-width: 480px) {
+      .bot-tooltip { font-size: 12px; padding: 7px 11px; }
+    }
+  </style>
 </head>
 <body>
   <canvas id="neural-canvas" aria-hidden="true"></canvas>
@@ -124,10 +195,6 @@
   <script src="data.js"></script>
   <script src="common.js"></script>
   <script src="app.js"></script>
-  
-  <!-- الشات بوت -->
-  <script type="module" src="./ai-chat-widget.js"></script>
-  <abdalrhman-ai-chat api="https://abdalrhman-portofolio.vercel.app/api/chat"></abdalrhman-ai-chat>
 
   <!-- خلفية الـ Cyber Grid Flow السماوي الفاتح -->
   <script>
@@ -147,7 +214,7 @@
       offset = (offset + 0.6) % 40;
 
       // لون سماوي فاتح واضح وهادئ
-      ctx.strokeStyle = 'rgba(186, 230, 253, 0.45)'; 
+      ctx.strokeStyle = 'rgba(186, 230, 253, 0.45)';
       ctx.lineWidth = 1;
 
       // رسم الخطوط الطولية
@@ -170,13 +237,28 @@
     }
     animate();
   </script>
-<!-- الشات بوت المدمج مع الفقاعة -->
+
+  <!-- الشات بوت (مرة واحدة بس) + الـ tooltip -->
   <script type="module" src="./ai-chat-widget.js"></script>
-  
+
   <div class="chat-widget-wrapper">
-    <div class="bot-tooltip">Ask me about Abdalrhman</div>
-    <abdalrhman-ai-chat api="https://abdalrhman-portofolio.vercel.app/api/chat"></abdalrhman-ai-chat>
+    <div class="bot-tooltip" id="botTooltip">Ask me about Abdalrhman</div>
   </div>
+  <abdalrhman-ai-chat api="https://abdalrhman-portofolio.vercel.app/api/chat"></abdalrhman-ai-chat>
+
+  <script>
+    // يخفي الـ tooltip بعد 12 ثانية أو أول ما حد يضغط في أي مكان قريب من الشات
+    (function () {
+      const tip = document.getElementById('botTooltip');
+      if (!tip) return;
+      const hide = () => tip.classList.add('hide');
+      setTimeout(hide, 12000);
+      document.addEventListener('click', function (e) {
+        const chat = e.target.closest && e.target.closest('abdalrhman-ai-chat');
+        if (chat) hide();
+      });
+    })();
+  </script>
 
 </body>
 </html>
