@@ -15,8 +15,8 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   background:
-    radial-gradient(circle at 15% 10%, rgba(37, 99, 235, .04), transparent 30%),
-    radial-gradient(circle at 85% 25%, rgba(2, 132, 199, .04), transparent 28%),
+    radial-gradient(circle at 15% 10%, rgba(56, 189, 248, .12), transparent 35%),
+    radial-gradient(circle at 85% 25%, rgba(125, 211, 252, .15), transparent 30%),
     var(--bg);
   color: var(--text);
   font-family: Inter, system-ui, sans-serif;
@@ -32,7 +32,17 @@ button, a { -webkit-tap-highlight-color: transparent; }
   margin-inline: auto; 
 }
 
-#neural-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: -4; opacity: 0.6; }
+/* الكانفاس التفاعلي في الخلفية (بيبي بلو) */
+#neural-canvas { 
+  position: fixed; 
+  inset: 0; 
+  width: 100%; 
+  height: 100%; 
+  pointer-events: none; 
+  z-index: -4; 
+  opacity: 0.85; 
+  color: #38bdf8; /* لون الجسيمات الشفافة / Baby Blue */
+}
 
 /* شريط التصفح العلوي بعرض الصفحة الفاخر */
 .site-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 20; padding-top: 16px; }
@@ -79,15 +89,15 @@ h1 span, h2 span { color: var(--accent); }
   box-shadow: 0 1px 3px rgba(0,0,0,.02);
 }
 
-/* الأفاتار المعزز بقوة الجماليات */
+/* الأفاتار والمسارات المتحركة (Baby Blue Accent) */
 .hero-visual { display:grid; place-items:center; position:relative; }
 .avatar-orbit { width:min(360px, 68vw); aspect-ratio:1; position:relative; display:grid; place-items:center; }
-.avatar-card { width:180px; height:180px; border-radius:30%; display:grid; place-items:center; background:linear-gradient(145deg, #ffffff, rgba(37, 99, 235, .05)); border:1px solid rgba(37, 99, 235, .2); box-shadow:0 20px 40px rgba(37, 99, 235, .08); }
+.avatar-card { width:180px; height:180px; border-radius:30%; display:grid; place-items:center; background:linear-gradient(145deg, #ffffff, rgba(56, 189, 248, .1)); border:1px solid rgba(56, 189, 248, .3); box-shadow:0 20px 40px rgba(56, 189, 248, .12); }
 .avatar-placeholder { width:125px; height:125px; border-radius:24%; display:grid; place-items:center; font-size:32px; font-weight:800; color:var(--accent); border:1px solid rgba(37, 99, 235, .2); background:#ffffff; overflow:hidden; }
 .avatar-placeholder img { width:100%; height:100%; object-fit:cover; }
-.orbit { position:absolute; border:1px solid rgba(37, 99, 235, .12); border-radius:50%; }
+.orbit { position:absolute; border:1px solid rgba(56, 189, 248, .35); border-radius:50%; }
 .orbit-one { inset:8%; transform:rotate(20deg) scaleY(.48); }
-.orbit-two { inset:2%; transform:rotate(-30deg) scaleY(.35); border-color:rgba(2, 132, 199, .15); }
+.orbit-two { inset:2%; transform:rotate(-30deg) scaleY(.35); border-color:rgba(125, 211, 252, .4); }
 .floating-chip { position:absolute; padding:8px 12px; border-radius:12px; border:1px solid var(--line); background:rgba(255, 255, 255, .9); backdrop-filter:blur(10px); font-size:11px; font-weight: 600; color: var(--text); box-shadow: var(--shadow); }
 .chip-one { top:15%; right:-5%; }.chip-two { bottom:12%; right:-2%; }.chip-three { bottom:20%; left:-5%; }
 
@@ -141,14 +151,14 @@ h1 span, h2 span { color: var(--accent); }
 .frame-bar { display:flex; align-items:center; gap:6px; padding:10px 14px; border-bottom:1px solid var(--line); background:#ffffff; }
 .frame-bar i { width:9px; height:9px; border-radius:50%; background:rgba(15, 23, 42, .15); }
 .frame-bar span { margin-left:10px; font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.frame-body { aspect-ratio:16/10; position:relative; background:radial-gradient(circle at 50% 40%, rgba(37, 99, 235, .05), transparent 60%); }
+.frame-body { aspect-ratio:16/10; position:relative; background:radial-gradient(circle at 50% 40%, rgba(56, 189, 248, .08), transparent 60%); }
 .frame-body video, .frame-body img { width:100%; height:100%; object-fit:cover; display:block; }
 
 .flow { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; padding:20px; }
 .flow-chain { display:flex; align-items:center; justify-content:center; width:100%; }
 .flow-node { display:grid; justify-items:center; gap:8px; padding:12px 10px; min-width:85px; border:1px solid var(--line); border-radius:14px; background:#ffffff; font-size:11px; font-weight:600; color:var(--text); text-align:center; box-shadow: 0 4px 12px rgba(0,0,0,.03); }
 .flow-node b { width:26px; height:26px; display:grid; place-items:center; border-radius:8px; font-size:10px; color:var(--accent); background:rgba(37, 99, 235, .08); }
-.flow-link { flex:1; min-width:12px; max-width:40px; height:2px; background:repeating-linear-gradient(90deg, rgba(37, 99, 235, .5) 0 4px, transparent 4px 8px); }
+.flow-link { flex:1; min-width:12px; max-width:40px; height:2px; background:repeating-linear-gradient(90deg, rgba(56, 189, 248, .8) 0 4px, transparent 4px 8px); }
 .flow-note { display:flex; align-items:center; gap:8px; margin:0; font-size:11px; color:var(--muted); }
 
 /* قسم التواصل والتذييل */
@@ -160,8 +170,30 @@ h1 span, h2 span { color: var(--accent); }
 .socials { display:flex; gap:6px; }
 .socials a { width:30px; height:30px; display:grid; place-items:center; border:1px solid var(--line); border-radius:8px; font-size:10px; text-transform:uppercase; color:var(--muted); background: #ffffff; }
 .socials a:hover { color:var(--accent); border-color:rgba(37, 99, 235, .3); }
-.whatsapp-fab { position:fixed; right:20px; bottom:20px; width:48px; height:48px; display:grid; place-items:center; border-radius:50%; background:var(--accent); color:#ffffff; font-size:20px; font-weight:800; box-shadow:0 10px 25px rgba(37, 99, 235, .3); z-index:15; transition:.25s; }
-.whatsapp-fab:hover { transform:translateY(-3px); background: #1d4ed8; }
+
+/* زر الواتساب العائم باللون الأخضر الأصلي */
+.whatsapp-fab { 
+  position:fixed; 
+  right:20px; 
+  bottom:20px; 
+  width:48px; 
+  height:48px; 
+  display:grid; 
+  place-items:center; 
+  border-radius:50%; 
+  background: #25D366; /* لون أخضر واتساب الأصلي */
+  color:#ffffff; 
+  font-size:20px; 
+  font-weight:800; 
+  box-shadow:0 10px 25px rgba(37, 211, 102, .35); 
+  z-index:15; 
+  transition:.25s; 
+}
+.whatsapp-fab:hover { 
+  transform:translateY(-3px); 
+  background: #128C7E; 
+  box-shadow:0 12px 28px rgba(18, 140, 126, .4);
+}
 
 .reveal { opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease; }
 .reveal.visible { opacity:1; transform:none; }
@@ -179,6 +211,7 @@ h1 span, h2 span { color: var(--accent); }
   .project:nth-child(even) .project-media { order: 2; }
   .contact-card { flex-direction:column; align-items:flex-start; }
 }
+
 /* ---- Brand avatar photo (navbar) ---- */
 .brand-mark { overflow: hidden; }
 .brand-mark img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
