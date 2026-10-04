@@ -1,11 +1,11 @@
 :root {
   /* ألوان الثيم الفاتح التقني (Light Mode) */
-  --bg: #f8fafc;                  /* خلفية الموقع الثلجية الهادئة */
-  --text: #0f172a;                /* لون العناوين والنصوص الرئيسية (كحلي داكن) */
-  --muted: #475569;               /* لون النصوص الفرعية */
+  --bg: #f8fafc;               /* خلفية الموقع الثلجية الهادئة */
+  --text: #0f172a;            /* لون العناوين والنصوص الرئيسية (كحلي داكن) */
+  --muted: #475569;           /* لون النصوص الفرعية */
   --line: rgba(15, 23, 42, 0.08); /* حدود خفيفة وأنيقة */
-  --accent: #2563eb;              /* أزرق كهربائي رئيسي للأزرار والتمييز */
-  --accent-2: #0284c7;            /* أزرق ثانوي للتدرجات */
+  --accent: #2563eb;          /* أزرق كهربائي رئيسي للأزرار والتمييز */
+  --accent-2: #0284c7;        /* أزرق ثانوي للتدرجات */
   --shadow: 0 20px 50px rgba(15, 23, 42, 0.06); /* ظلال ناعمة خفيفة */
   --radius: 20px;
 }
@@ -271,32 +271,36 @@ h1 span, h2 span { color: var(--accent); }
   .scope-summary { position: static; }
   .ideal-grid { grid-template-columns: 1fr; }
 }
-/* الحاوية الرئيسية في أسفل اليمين أو اليسار */
-.bot-widget-container {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  z-index: 9999;
+
+/* ==========================================================
+   فقاعة الشات (Chatbot Tooltip) - موقع دقيق فوق زر الواتساب
+   ========================================================== */
+abdalrhman-ai-chat {
+  position: fixed !important;
+  bottom: 80px !important; /* ليرتفع مسافة مريحة فوق زرار الواتساب (20px + 48px + مسافة) */
+  right: 20px !important;
+  z-index: 9999 !important;
 }
 
-/* فقاعة الكلام */
+/* الفقاعة النصية الموجهة لأيقونة البوت الملونة */
 .bot-tooltip {
-  background-color: #1e293b; /* لون غامق أنيق */
+  position: absolute;
+  right: 64px; /* المسافة من الزر الدائري للبوت */
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #0f172a;
   color: #ffffff;
   padding: 8px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
   white-space: nowrap;
-  position: relative;
-  animation: float 3s ease-in-out infinite; /* حركة تموج خفيفة */
+  pointer-events: none;
+  animation: floatTooltip 3s ease-in-out infinite;
 }
 
-/* السهم الصغير الموجه ناحية البوت */
+/* السهم الموجه ناحية زر الشات الملون */
 .bot-tooltip::after {
   content: "";
   position: absolute;
@@ -305,31 +309,11 @@ h1 span, h2 span { color: var(--accent); }
   transform: translateY(-50%);
   border-width: 6px 0 6px 6px;
   border-style: solid;
-  border-color: transparent transparent transparent #1e293b;
+  border-color: transparent transparent transparent #0f172a;
 }
 
-/* زرار البوت */
-.bot-button {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease;
-}
-
-.bot-button:hover {
-  transform: scale(1.08);
-}
-
-/* أنيميشن طفو خفيف للفقاعة */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+/* حركة طفو ناعمة */
+@keyframes floatTooltip {
+  0%, 100% { transform: translateY(-50%); }
+  50% { transform: translateY(-56%); }
 }
