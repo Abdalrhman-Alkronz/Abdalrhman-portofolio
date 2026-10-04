@@ -271,3 +271,65 @@ h1 span, h2 span { color: var(--accent); }
   .scope-summary { position: static; }
   .ideal-grid { grid-template-columns: 1fr; }
 }
+/* الحاوية الرئيسية في أسفل اليمين أو اليسار */
+.bot-widget-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 9999;
+}
+
+/* فقاعة الكلام */
+.bot-tooltip {
+  background-color: #1e293b; /* لون غامق أنيق */
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  position: relative;
+  animation: float 3s ease-in-out infinite; /* حركة تموج خفيفة */
+}
+
+/* السهم الصغير الموجه ناحية البوت */
+.bot-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  transform: translateY(-50%);
+  border-width: 6px 0 6px 6px;
+  border-style: solid;
+  border-color: transparent transparent transparent #1e293b;
+}
+
+/* زرار البوت */
+.bot-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.bot-button:hover {
+  transform: scale(1.08);
+}
+
+/* أنيميشن طفو خفيف للفقاعة */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
