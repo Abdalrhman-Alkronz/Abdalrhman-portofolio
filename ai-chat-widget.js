@@ -376,3 +376,5 @@ class AbdalrhmanAiChat extends HTMLElement {
 }
 
 customElements.define("abdalrhman-ai-chat", AbdalrhmanAiChat);
+
+const apiEndpoint = this.getAttribute("api") || "https://your-vercel-app.vercel.app/api/chat";
