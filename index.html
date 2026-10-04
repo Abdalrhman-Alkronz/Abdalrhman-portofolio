@@ -170,16 +170,11 @@
     }
     animate();
   </script>
-  <div class="bot-widget-container">
-  <!-- الفقاعة النصية الصغيرة -->
-  <div class="bot-tooltip">
-    Ask me about Abdalrhman
-  </div>
-  
-  <!-- زرار البوت -->
-  <button class="bot-button" aria-label="Open Chat">
-    🤖
-  </button>
+  <!-- الشات بوت المدمج مع الفقاعة -->
+<script type="module" src="./ai-chat-widget.js"></script>
+<abdalrhman-ai-chat api="https://abdalrhman-portofolio.vercel.app/api/chat">
+  <div class="bot-tooltip">Ask me about Abdalrhman</div>
+</abdalrhman-ai-chat>
 </div>
 </body>
 </html>
