@@ -8,7 +8,7 @@
 
 // Avatar is embedded as Base64 so it never depends on a file path
 // or folder structure — it will always render correctly.
-const AVATAR_DATA_URI = "avatar.jpeg";
+const AVATAR_DATA_URI = "avatar_forced.png";
 class AbdalrhmanAiChat extends HTMLElement {
   constructor() {
     super();
