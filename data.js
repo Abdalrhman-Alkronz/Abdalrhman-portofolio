@@ -43,13 +43,13 @@ const portfolioData = {
       github: ""
     },
     {
-      id: "notification-agent",
-      title: "AI Notification & Decision Agent",
-      tagline: "Context-aware alert system with human-in-the-loop fallback",
-      description: "An intelligent event assistant that reads unstructured incoming data, compiles surrounding context, and triggers automated alerts through messaging channels when critical human validation or action is required.",
-      tech: ["Python", "LLMs", "Gradio", "APIs", "Automations"],
+      id: "clinical-triage-system",
+      title: "AI Clinical Triage & Notion System",
+      tagline: "Intelligent healthcare request routing and clinical urgency sorting",
+      description: "An automated clinical intake and triage workflow built with n8n and Notion. It evaluates patient complaints using structured AI and clinical red-flag rules, instantly routes emergencies to medical staff via Telegram, and organizes patient bookings in relational Notion databases.",
+      tech: ["n8n", "Notion API", "LLM Triage", "Telegram Bot", "Structured Outputs"],
       video: "",
-      image: "",
+      image: "assets/triage-system.png",
       liveDemo: "",
       github: ""
     },
