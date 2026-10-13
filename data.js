@@ -7,7 +7,7 @@ const portfolioData = {
     linkedin: "https://linkedin.com/in/your-profile",
     github: "https://github.com/your-username",
     upwork: "https://upwork.com/freelancers/~your-id",
-    avatar: "Semi_formal_01.jpeg" // حط مسار صورتك هنا مستقبلاً مثلاً: "assets/me.jpg"
+    avatar: "Semi_formal_01.jpeg"
   },
   highlights: [
     "Agentic AI", "AI Agents", "Workflow Automation",
@@ -37,19 +37,19 @@ const portfolioData = {
       tagline: "Autonomous resume parsing and applicant scoring pipeline",
       description: "An automated recruitment workflow that ingests CVs, parses structured candidate profiles, compares skills against strict job descriptions, and organizes qualified applicants directly into Google Sheets for rapid HR screening.",
       tech: ["n8n", "AI Processing", "Google Sheets", "PDF Extraction"],
-      video: "", // ضيف مسار فيديو العرض هنا مثلاً "videos/hr-screening.mp4"
+      video: "",
       image: "cv-screening.png",
       liveDemo: "",
       github: ""
     },
     {
-      id: "notification-agent",
-      title: "AI Notification & Decision Agent",
-      tagline: "Context-aware alert system with human-in-the-loop fallback",
-      description: "An intelligent event assistant that reads unstructured incoming data, compiles surrounding context, and triggers automated alerts through messaging channels when critical human validation or action is required.",
-      tech: ["Python", "LLMs", "Gradio", "APIs", "Automations"],
+      id: "clinical-triage-system",
+      title: "AI Clinical Triage & Notion System",
+      tagline: "Intelligent healthcare request routing and clinical urgency sorting",
+      description: "An automated clinical intake and triage workflow built with n8n and Notion. It evaluates patient complaints using structured AI and clinical red-flag rules, instantly routes emergencies to medical staff via Telegram, and organizes patient bookings in relational Notion databases.",
+      tech: ["n8n", "Notion API", "LLM Triage", "Telegram Bot", "Structured Outputs"],
       video: "",
-      image: "",
+      image: "triage-system.png", // تم ربط الصورة المصممة للمشروع الثاني هنا بدقة
       liveDemo: "",
       github: ""
     },
