@@ -1,5 +1,7 @@
 // ===============================
 // scope.html only — single project detail page
+// Every section is optional: if a project has no data for it,
+// the section simply doesn't appear.
 // ===============================
 
 function getRequestedProject() {
@@ -7,43 +9,62 @@ function getRequestedProject() {
   return portfolioData.projects.find(p => p.id === id) || portfolioData.projects[0];
 }
 
+function scopeBlock(title, inner) {
+  return inner ? `<div class="scope-block"><h4>${title}</h4>${inner}</div>` : "";
+}
+
 function renderScopePage() {
   const project = getRequestedProject();
   const s = project.scope || {};
   const p = portfolioData.personal;
 
-  document.title = `${project.title} — Scope — ${p.name}`;
-
+  document.title = `${project.title} — ${p.name}`;
   $("#scopeTitle").textContent = project.title;
   $("#scopeTagline").textContent = project.tagline;
-  $("#scopeDescription").textContent = project.description;
 
-  $("#scopeTech").innerHTML = project.tech.map(t => `<span>${t}</span>`).join("");
+  $("#scopeMedia").innerHTML = projectMedia(project)
+    .replace('<div class="project-media">', '<div class="project-media scope-project-media">');
 
-  $("#scopeIdealFor").innerHTML = (s.idealFor || []).map(item => `
-    <div class="ideal-card"><span class="ideal-dot"></span>${item}</div>
-  `).join("");
+  const steps = (s.steps || []).map((step, i) => {
+    const t = typeof step === "string" ? { text: step } : step;
+    return `
+      <div class="approach-step">
+        <span class="approach-index">${String(i + 1).padStart(2, "0")}</span>
+        <p>${t.title ? `<strong>${t.title}.</strong> ` : ""}${t.text}</p>
+      </div>`;
+  }).join("");
 
-  $("#scopeDeliverables").innerHTML = (s.deliverables || []).map(item => `
-    <li><span class="check">✓</span>${item}</li>
-  `).join("");
+  const highlights = (s.highlights || []).map(item =>
+    `<div class="ideal-card"><span class="ideal-dot"></span>${item}</div>`
+  ).join("");
 
-  $("#scopeApproach").innerHTML = (s.approach || []).map((step, i) => `
-    <div class="approach-step">
-      <span class="approach-index">${String(i + 1).padStart(2, "0")}</span>
-      <p>${step}</p>
-    </div>
-  `).join("");
+  $("#scopeSections").innerHTML = [
+    scopeBlock("Overview", `<p>${project.description}</p>`),
+    scopeBlock("The Problem", s.problem ? `<p>${s.problem}</p>` : ""),
+    scopeBlock("How It Works",
+      (s.intro ? `<p class="scope-intro">${s.intro}</p>` : "") +
+      (steps ? `<div class="approach-list">${steps}</div>` : "")),
+    scopeBlock("Key Highlights", highlights ? `<div class="ideal-grid">${highlights}</div>` : ""),
+    s.note ? `<div class="scope-note"><strong>Note</strong><p>${s.note}</p></div>` : "",
+    scopeBlock("Tech Stack", `<div class="project-tech">${project.tech.map(t => `<span>${t}</span>`).join("")}</div>`)
+  ].join("");
 
-  $("#scopeTimeline").textContent = s.timeline || "Timeline scoped per project";
-  $("#scopeFormat").textContent = s.format || "Fully documented handover";
+  // Side card
+  $("#scopeSnapshot").innerHTML = (s.snapshot || []).map(([label, value]) =>
+    `<div class="summary-row"><span>${label}</span><strong>${value}</strong></div>`
+  ).join("");
 
-  $("#scopeMedia").innerHTML = projectMedia(project).replace('<div class="project-media">', '<div class="project-media scope-project-media">');
+  const delivers = (s.delivers || []).map(item =>
+    `<li><span class="check">✓</span>${item}</li>`
+  ).join("");
+  $("#scopeDelivers").innerHTML = delivers
+    ? `<h4>What It Delivers</h4><ul class="deliverables-list">${delivers}</ul>`
+    : "";
 
   const actions = [];
   if (project.liveDemo) actions.push(`<a class="button button-primary" href="${project.liveDemo}" target="_blank" rel="noopener">Live Demo ↗</a>`);
   if (project.github) actions.push(`<a class="button button-secondary" href="${project.github}" target="_blank" rel="noopener">GitHub ↗</a>`);
-  actions.push(`<a class="button button-secondary" data-link="whatsapp">Discuss This Build ↗</a>`);
+  actions.push(`<a class="button ${actions.length ? "button-secondary" : "button-primary"}" data-link="whatsapp">Discuss This Build ↗</a>`);
   $("#scopeActions").innerHTML = actions.join("");
 
   const list = portfolioData.projects;

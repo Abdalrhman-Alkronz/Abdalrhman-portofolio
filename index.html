@@ -111,6 +111,7 @@
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
+        <a href="workflows.html">Workflows</a>
         <a href="#contact">Contact</a>
         <a class="nav-cta" data-link="whatsapp">Get in Touch <span>↗</span></a>
       </div>
@@ -204,47 +205,6 @@
   <script src="common.js"></script>
   <script src="app.js"></script>
 
-  <!-- خلفية الـ Cyber Grid Flow السماوي الفاتح -->
-  <script>
-    const canvas = document.getElementById('neural-canvas');
-    const ctx = canvas.getContext('2d');
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    let offset = 0;
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      offset = (offset + 0.6) % 40;
-
-      // لون سماوي فاتح واضح وهادئ
-      ctx.strokeStyle = 'rgba(186, 230, 253, 0.45)';
-      ctx.lineWidth = 1;
-
-      // رسم الخطوط الطولية
-      for (let x = 0; x < canvas.width; x += 60) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, canvas.height);
-        ctx.stroke();
-      }
-
-      // رسم الخطوط العرضية المتحركة
-      for (let y = offset; y < canvas.height; y += 40) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(canvas.width, y);
-        ctx.stroke();
-      }
-
-      requestAnimationFrame(animate);
-    }
-    animate();
-  </script>
 
   <!-- الشات بوت (مرة واحدة بس) + الـ tooltip -->
   <script type="module" src="./ai-chat-widget.js"></script>

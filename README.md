@@ -1,69 +1,51 @@
 # Abdalrhman Mohammed — Portfolio
 
-A lightweight, responsive, single-page portfolio built with plain HTML, CSS and JavaScript.
-
-## Why this version?
-
-It has no build step and no framework dependency, so it is very easy to edit and deploy for free.
+A lightweight, responsive portfolio built with plain HTML, CSS and JavaScript.
+No build step, no framework. The AI chat assistant uses one small serverless
+function (`api/chat.js`) so the API key is never exposed.
 
 ## Files
 
-- `index.html` — page structure
-- `styles.css` — UI/UX and responsive styling
-- `app.js` — rendering, animations, canvas background and interactions
-- `data.js` — **all editable portfolio content**
+| File | What it does |
+|---|---|
+| `index.html` | Home page |
+| `scope.html` + `scope.js` | Project detail page (opens from "View Full Scope") |
+| `workflows.html` + `workflows.js` | Workflows page |
+| `data.js` | **All home-page and project content** |
+| `workflows-data.js` | **All content of the Workflows page** |
+| `common.js` | Shared code (background, links, project images) |
+| `app.js` | Home page rendering |
+| `styles.css` | Styling for every page |
+| `ai-chat-widget.js` | The chat bubble (add `<abdalrhman-ai-chat api="...">` to a page) |
+| `api/chat.js` | Chat backend, deployed by Vercel (key lives in Vercel settings) |
 
-## Edit your information
+## Add or change a project
 
-Open `data.js` and change:
+Edit `data.js`. For the image, upload the PNG next to `index.html` and write
+only its file name, for example `image: "task-manager.png"`.
+If the file is not there yet, the site shows a clean workflow preview instead
+of a broken image, and switches to your image as soon as you upload it.
 
-- LinkedIn
-- GitHub
-- Upwork
-- profile image
-- projects
-- video URLs
-- live demo URLs
-- project GitHub URLs
-- skills
+## Add a workflow
 
-## Adding a project video
+Open `workflows-data.js`, copy one workflow object, paste it after the last one
+and edit it. The instructions are at the top of that file.
 
-In `data.js`, change:
+## Chat assistant
 
-```js
-video: ""
-```
+- The API key is set in Vercel: Project, Settings, Environment Variables,
+  `OPENROUTER_API_KEY`. Redeploy after changing it.
+- Check it any time in the browser:
+  - `https://YOUR-SITE.vercel.app/api/chat` shows whether the key is set.
+  - `https://YOUR-SITE.vercel.app/api/chat?test=1` tries each model once and
+    shows the exact error if one fails.
+- Free OpenRouter models change over time. To change the model list without
+  editing code, add the Vercel variable `OPENROUTER_MODELS`
+  (comma separated, best first), for example `openai/gpt-4o-mini,openrouter/free`.
+- When project content on the site changes, update the `KNOWLEDGE` text inside
+  `api/chat.js` too, so the assistant knows about it.
 
-to something like:
+## Before sharing the site
 
-```js
-video: "videos/my-project-demo.mp4"
-```
-
-Then create:
-
-```text
-videos/
-  my-project-demo.mp4
-```
-
-## Run locally
-
-You can simply open `index.html`.
-
-For a better local experience, use VS Code + Live Server.
-
-## Free deployment
-
-This project can be deployed on GitHub Pages, Netlify, Vercel, or Firebase Hosting.
-
-No backend is required for the current portfolio.
-
-## Important
-
-Replace placeholder social URLs before publishing:
-
-- `https://linkedin.com/in/your-profile`
-- `https://github.com/your-username`
-- `https://upwork.com/freelancers/~your-id`
+Replace the placeholder social URLs in `data.js` (`linkedin`, `github`, `upwork`).
+Links that still contain `your-...` are hidden automatically.

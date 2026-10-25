@@ -1,5 +1,6 @@
 // ===============================
 // index.html only — home page rendering
+// (shared helpers such as projectMedia live in common.js)
 // ===============================
 
 function renderSkills() {
@@ -22,58 +23,6 @@ function projectActions(project) {
   return `<span class="project-status"><span class="pulse"></span> Active Case Study</span>`;
 }
 
-// دالة عرض الوسائط التي كانت مفقودة وتتسبب في إخفاء الصور
-function projectMedia(project) {
-  if (project.image) {
-    return `
-      <div class="project-media">
-        <div class="frame-bar">
-          <i></i><i></i><i>icon</i>
-          <span>${project.title}</span>
-        </div>
-        <div class="frame-body">
-          <img src="${project.image}" alt="${project.title}" loading="lazy" />
-        </div>
-      </div>
-    `;
-  }
-  
-  if (project.video) {
-    return `
-      <div class="project-media">
-        <div class="frame-bar">
-          <i></i><i></i><i></i>
-          <span>${project.title}</span>
-        </div>
-        <div class="frame-body">
-          <video src="${project.video}" autoplay loop muted playsinline></video>
-        </div>
-      </div>
-    `;
-  }
-
-  // الشكل الافتراضي لو مفيش صورة أو فيديو
-  return `
-    <div class="project-media">
-      <div class="frame-bar">
-        <i></i><i></i><i></i>
-        <span>Workflow Preview</span>
-      </div>
-      <div class="frame-body">
-        <div class="flow">
-          <div class="flow-chain">
-            <div class="flow-node"><b>AI</b>Input</div>
-            <div class="flow-link"></div>
-            <div class="flow-node"><b>n8n</b>Process</div>
-            <div class="flow-link"></div>
-            <div class="flow-node"><b>API</b>Output</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
 function renderProjects() {
   $("#projectsList").innerHTML = portfolioData.projects.map(project => `
     <article class="project reveal">
@@ -92,8 +41,7 @@ function renderProjects() {
   `).join("");
 }
 
-// التأكد من وجود دوال الـ highlights لو كانت متعرفة في ملف مشترك
-if (typeof renderHighlights === 'function') renderHighlights();
+renderHighlights();
 renderSkills();
 renderProjects();
-if (typeof initCommon === 'function') initCommon();
+initCommon();

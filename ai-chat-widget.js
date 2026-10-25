@@ -78,6 +78,8 @@ class AbdalrhmanAiChat extends HTMLElement {
           object-fit: cover;
           display: block;
         }
+        .chat-button.no-avatar { display: grid; place-items: center; color: var(--accent); font-weight: 800; font-size: 15px; }
+        .chat-button.no-avatar::before { content: "AM"; }
         .chat-button .ping {
           position: absolute;
           top: -2px;
@@ -260,7 +262,7 @@ class AbdalrhmanAiChat extends HTMLElement {
       <div class="widget-root">
         <div class="chat-box" id="chatBox">
           <div class="chat-header">
-            <img src="${avatarUrl}" alt="Abdalrhman Mohammed">
+            <img src="${avatarUrl}" alt="Abdalrhman Mohammed" onerror="this.style.visibility='hidden'">
             <div class="info">
               <h4>Abdalrhman Mohammed</h4>
               <p>AI Assistant · Online</p>
@@ -275,7 +277,7 @@ class AbdalrhmanAiChat extends HTMLElement {
         </div>
 
         <button class="chat-button" id="toggleBtn" aria-label="Open chat">
-          <img src="${avatarUrl}" alt="Chat">
+          <img src="${avatarUrl}" alt="Chat" onerror="this.parentElement.classList.add('no-avatar'); this.remove()">
           <span class="ping"></span>
         </button>
       </div>
@@ -325,6 +327,7 @@ class AbdalrhmanAiChat extends HTMLElement {
 
         const data = await response.json();
         typingEl.remove();
+        if (!data.reply) console.warn("[chat] API error", response.status, data);
 
         if (data.reply) {
           this.appendMessage(data.reply, "bot");
@@ -333,11 +336,12 @@ class AbdalrhmanAiChat extends HTMLElement {
           // Keep the context window light
           if (this.history.length > 12) this.history = this.history.slice(-12);
         } else {
-          this.appendMessage("Sorry, something went wrong. Please try again in a moment.", "bot");
+          this.appendMessage("The assistant is temporarily unavailable. You can reach Abdalrhman directly on WhatsApp or by email.", "bot");
         }
       } catch (err) {
         typingEl.remove();
-        this.appendMessage("Couldn't reach the assistant right now — please try again shortly.", "bot");
+        console.warn("[chat] request failed", err);
+        this.appendMessage("Couldn't reach the assistant right now. Please try again shortly, or contact Abdalrhman directly on WhatsApp.", "bot");
       } finally {
         this.isSending = false;
         sendBtn.disabled = false;
@@ -377,4 +381,3 @@ class AbdalrhmanAiChat extends HTMLElement {
 
 customElements.define("abdalrhman-ai-chat", AbdalrhmanAiChat);
 
-const apiEndpoint = this.getAttribute("api") || "https://your-vercel-app.vercel.app/api/chat";

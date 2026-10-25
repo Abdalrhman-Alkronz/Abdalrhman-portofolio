@@ -1,9 +1,13 @@
 // ===============================
-// Shared logic used by index.html and scope.html
+// Shared logic used by every page (index, scope, workflows)
 // ===============================
 
 const $ = (selector, parent = document) => parent.querySelector(selector);
 const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
+
+function isPlaceholderUrl(url) {
+  return !url || /your-profile|your-username|your-id/i.test(url);
+}
 
 function setLinks() {
   const p = portfolioData.personal;
@@ -23,12 +27,14 @@ function setLinks() {
     el.rel = "noopener";
   });
 
+  // Social icons: links that are still placeholders (your-username...) are
+  // skipped automatically, so the footer never shows a dead link.
   const socials = [
     ["LinkedIn", p.linkedin, "in"],
     ["GitHub", p.github, "gh"],
     ["Upwork", p.upwork, "up"],
     ["WhatsApp", p.whatsapp, "wa"]
-  ];
+  ].filter(([, href]) => !isPlaceholderUrl(href));
 
   const socialsEl = $("#socials");
   if (socialsEl) {
@@ -51,15 +57,26 @@ function renderHighlights() {
   if (el) el.innerHTML = portfolioData.highlights.map(item => `<span>${item}</span>`).join("");
 }
 
+// ---------- Project media (image / video / clean placeholder) ----------
+
 function flowPlaceholder(project) {
-  const nodes = project.tech.slice(0, 4).map((t, i) =>
-    `<div class="flow-node"><b>${String(i + 1).padStart(2, "0")}</b><span>${t}</span></div>`
-  ).join('<span class="flow-link"></span>');
+  const nodes = project.tech.slice(0, 4).map(t => {
+    const label = t.replace(/\s*\(.*\)/, "");
+    return `<div class="flow-node"><b>${label.charAt(0).toUpperCase()}</b><span>${label}</span></div>`;
+  }).join('<span class="flow-link"></span>');
   return `
     <div class="flow">
       <div class="flow-chain">${nodes}</div>
-      <p class="flow-note"><span class="pulse"></span> Demo preview loading</p>
+      <p class="flow-note"><span class="pulse"></span> Preview image coming soon</p>
     </div>`;
+}
+
+// Called by the <img onerror> below: if the image file is missing,
+// swap in the placeholder instead of showing a broken-image icon.
+function imageFallback(img) {
+  const project = portfolioData.projects.find(p => p.id === img.dataset.pid);
+  const body = img.closest(".frame-body");
+  if (project && body) body.innerHTML = flowPlaceholder(project);
 }
 
 function projectMedia(project) {
@@ -67,7 +84,7 @@ function projectMedia(project) {
   if (project.video) {
     body = `<video controls preload="metadata" src="${project.video}" playsinline></video>`;
   } else if (project.image) {
-    body = `<img src="${project.image}" alt="${project.title}" loading="lazy">`;
+    body = `<img src="${project.image}" alt="${project.title}" loading="lazy" data-pid="${project.id}" onerror="imageFallback(this)">`;
   } else {
     body = flowPlaceholder(project);
   }
@@ -77,6 +94,8 @@ function projectMedia(project) {
       <div class="frame-body">${body}</div>
     </div>`;
 }
+
+// ---------- Interactions ----------
 
 function setupMobileMenu() {
   const toggle = $("#menuToggle");
@@ -95,6 +114,10 @@ function setupMobileMenu() {
 function setupReveal() {
   const targets = $$(".reveal");
   if (!targets.length) return;
+  if (!("IntersectionObserver" in window)) {
+    targets.forEach(el => el.classList.add("visible"));
+    return;
+  }
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -106,71 +129,46 @@ function setupReveal() {
   targets.forEach(el => observer.observe(el));
 }
 
+// Light-blue moving grid background (same on every page).
 function setupCanvas() {
   const canvas = $("#neural-canvas");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-  let width, height, particles;
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  function resize() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    canvas.style.width = width + "px";
-    canvas.style.height = height + "px";
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    const count = Math.min(65, Math.max(25, Math.floor((width * height) / 22000)));
-    particles = Array.from({ length: count }, (_, i) => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - .5) * .18,
-      vy: (Math.random() - .5) * .18,
-      r: i % 7 === 0 ? 1.5 : .8
-    }));
-  }
+  if (!ctx) return;
+  const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let offset = 0;
 
   function draw() {
-    ctx.clearRect(0, 0, width, height);
-    const maxDist = Math.min(140, width * .15);
-
-    for (const p of particles) {
-      if (!reducedMotion) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < -20 || p.x > width + 20) p.vx *= -1;
-        if (p.y < -20 || p.y > height + 20) p.vy *= -1;
-      }
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(88, 245, 194, .35)";
-      ctx.fill();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = "rgba(186, 230, 253, 0.45)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let x = 0; x < canvas.width; x += 60) {
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvas.height);
     }
-
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const a = particles[i], b = particles[j];
-        const dx = a.x - b.x, dy = a.y - b.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < maxDist) {
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(88, 245, 194, ${0.08 * (1 - dist / maxDist)})`;
-          ctx.lineWidth = .7;
-          ctx.stroke();
-        }
-      }
+    for (let y = offset; y < canvas.height; y += 40) {
+      ctx.moveTo(0, y);
+      ctx.lineTo(canvas.width, y);
     }
-    if (!reducedMotion) requestAnimationFrame(draw);
+    ctx.stroke();
+  }
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    draw();
+  }
+
+  function loop() {
+    offset = (offset + 0.6) % 40;
+    draw();
+    requestAnimationFrame(loop);
   }
 
   window.addEventListener("resize", resize, { passive: true });
   resize();
-  draw();
+  if (!reducedMotion) loop();
 }
 
 function initCommon() {
