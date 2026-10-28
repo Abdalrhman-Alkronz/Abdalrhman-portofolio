@@ -5,11 +5,14 @@
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-// نماذج مجانية سريعة ومستقرة على OpenRouter
+// Free models are tried in this order.
+// Free model names on OpenRouter change over time. If one stops working,
+// open  /api/chat?test=1  on your Vercel site: it shows which model fails.
+// You can also change the list WITHOUT editing code by adding the Vercel
+// environment variable OPENROUTER_MODELS (comma separated, best first).
 const DEFAULT_MODELS = [
-  "google/gemini-2.0-flash-exp:free",
-  "meta-llama/llama-3.3-70b-instruct:free",
-  "qwen/qwen-2.5-coder-32b-instruct:free",
+  "qwen/qwen3.8-27b:free",
+  "google/gemma-4-31b-it:free",
   "openrouter/free",
 ];
 const CUSTOM_MODELS = (process.env.OPENROUTER_MODELS || "")
@@ -108,6 +111,13 @@ Personality and style
 - Off-topic questions → Politely redirect to what you can help with (his work and automation topics). Small talk is fine, briefly.
 `;
 
+// Some free models on OpenRouter are safety classifiers: they answer only
+// "Safe" or "Unsafe". If a model returns that instead of a real answer,
+// it is treated as a failure and the next model is tried.
+function looksLikeSafetyLabel(text) {
+  return text.length < 60 && /^\s*(safe|unsafe)\b/i.test(text);
+}
+
 async function callOpenRouter(model, messages, maxTokens = 500) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 20000);
@@ -140,6 +150,11 @@ async function callOpenRouter(model, messages, maxTokens = 500) {
     const reply = data.choices?.[0]?.message?.content;
     if (typeof reply !== "string" || !reply.trim()) {
       const err = new Error("The model returned an empty reply");
+      err.status = 200;
+      throw err;
+    }
+    if (looksLikeSafetyLabel(reply)) {
+      const err = new Error("The model returned a safety label instead of an answer");
       err.status = 200;
       throw err;
     }
